@@ -5,6 +5,19 @@ from sqlalchemy import text
 from db import get_db
 
 
+# Funktio, jotta kategoriat saadaan yhdistettyä rental itemsin lisäämisen queruun
+# Tällä siis saadaan kaikki kategoriat
+def get_categories(_db):
+    _query = "SELECT id FROM categories"
+    rows = _db.execute(text(_query))
+    ids = [] # Tyhjä dictionary
+    for row in rows:
+        ids.append(row[0])
+    return ids
+
+
+
+# Funktio kategorioiden lisäämiseen
 def insert_categories():
     with get_db() as _db:
         _query = "INSERT INTO categories(name) VALUES(:category)"
