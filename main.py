@@ -1,9 +1,10 @@
 # Tähän luodaan ikilooppi datan lisäämistä varten
 import categories
+import rental_items
 import users
 
 while True:
-    _choice = input("Valitse vaihtoehdoista datan lisäämiseen: (1=lisää roolit, 2=lisää käyttäjiä, 3=lisää kategoriat q= lopeta): ")
+    _choice = input("Valitse vaihtoehdoista datan lisäämiseen: (1=lisää roolit, 2=lisää käyttäjiä, 3=lisää kategoriat, 4=lisätään featuret q= lopeta): ")
     if _choice == 'q':
         break
     elif _choice == '1':
@@ -19,3 +20,5 @@ while True:
         users.insert_users(num_of_rows)
     elif _choice == 3:
         categories.insert_categories()
+    elif _choice == 4:
+        rental_items.insert_features()
