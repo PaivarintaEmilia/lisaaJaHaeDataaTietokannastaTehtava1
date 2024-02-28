@@ -1,16 +1,18 @@
-# This is a sample Python script.
+# Tähän luodaan ikilooppi datan lisäämistä varten
+import users
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+while True:
+    _choice = input("Valitse vaihtoehdoista datan lisäämiseen: (1=lisää roolit, 2=lisää käyttäjiä, q= lopeta): ")
+    if _choice == 'q':
+        break
+    elif _choice == '1':
+        print("Lisätään roolit")
+        users.insert_roles()
+    elif _choice == '2':
+        # Käyttäjä saa päättää monta käyttäjää lisätään.
+        num_of_rows = input("Kuinka monta käyttäjää lisätään? (oletus 10): ")
+        if num_of_rows == "":
+            num_of_rows = 10
+        else:
+            num_of_rows = int(num_of_rows)
+        users.insert_users(num_of_rows)
