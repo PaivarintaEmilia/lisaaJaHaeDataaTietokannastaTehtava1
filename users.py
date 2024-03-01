@@ -31,6 +31,16 @@ def insert_roles():
 
 
 
+# Tehdään apufunktio usersien hakemiselle. Tämä tehdään jotta saadaan usersit rent_items_transactions() funktioon
+def get_users(_db):
+    _query = "SELECT id FROM auth_users"
+    rows = _db.execute(text(_query))
+    ids = []
+    for row in rows:
+        ids.append(row[0])
+    return ids
+
+
 # Apufunktio, jolla haetaan categories, jotta saadaan ne userien lisäämisen yhteydessä.
 def _get_roles(_db):
     _query = "SELECT id, role FROM roles"

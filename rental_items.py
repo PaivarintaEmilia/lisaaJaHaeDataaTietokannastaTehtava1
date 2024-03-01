@@ -8,6 +8,7 @@ from sqlalchemy import text
 
 from categories import get_categories
 from db import get_db
+from users import get_users
 
 
 # Haetaan itemien id:t, jotta ne saadaan randomistsi valittua, kun yhdistellään featureita ja rental_itemeita
@@ -121,5 +122,35 @@ def mix_features_and_items():
             except Exception as e:
                 print(e)
                 _db.rollback
+
+
+# Lisätään tavaraa rental_transactions tauluun
+def rent_items_transactions():
+    with get_db() as _db:
+        # Otetaan faker käyttöön
+        fake = Faker()
+
+        # Haetaan käyttäjät
+        users = get_users(_db)
+        # Haetaan itemit
+        items = _get_items(_db)
+
+        _query = "INSERT INTO rental_transactions(created_at, due_date, auth_users_id, rental_items_id) VALUES"
+
+        # Dictionary
+        variables = {}
+
+        for i in range(100):
+            _query += f':created_at{i}, :due_date{i}, :auth_users_id{i}, :rental_items_id{i},'
+            variables[f'created_at{i}'] = fake.date()
+            variables[f'due_date{i}'] = fake.date()
+            variables[f'auth_users_id{i}'] = choice(users)
+            variables[f'rental_items_id{i}'] = choice(items)
+
+        _query = _query[:-1]
+
+        _db.execute(text(_query), variables)
+        _db.commit
+
 
 

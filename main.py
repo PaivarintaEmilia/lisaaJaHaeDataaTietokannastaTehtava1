@@ -4,7 +4,15 @@ import rental_items
 import users
 
 while True:
-    _choice = input("Valitse vaihtoehdoista datan lisäämiseen: (1=lisää roolit,\n 2=lisää käyttäjiä,\n 3=lisää kategoriat,\n 4=lisätään featuret,\n 5=lisää tuotteet, \n 6=lisää ominaisuuksia tuotteisiin \n q= lopeta): ")
+    _choice = input("Valitse vaihtoehdoista datan lisäämiseen:" 
+                    "(1=lisää roolit\n "
+                    "2=lisää käyttäjiä\n" 
+                    "3=lisää kategoriat\n" 
+                    "4=lisätään featuret\n" 
+                    "5=lisää tuotteet\n" 
+                    "6=lisää ominaisuuksia tuotteisiin\n" 
+                    "7=lisää tavaraa transactioihin \n" 
+                    "q= lopeta): ")
     if _choice == 'q':
         break
     elif _choice == '1':
@@ -26,3 +34,5 @@ while True:
         rental_items.insert_items()
     elif _choice == '6':
         rental_items.mix_features_and_items()
+    elif _choice == '7':
+        rental_items.rent_items_transactions()
