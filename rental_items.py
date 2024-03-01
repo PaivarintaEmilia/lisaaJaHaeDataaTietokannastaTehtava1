@@ -10,6 +10,16 @@ from categories import get_categories
 from db import get_db
 
 
+# Haetaan itemien id:t, jotta ne saadaan randomistsi valittua, kun yhdistellään featureita ja rental_itemeita
+def _get_items(_db):
+    _query = "SELECT id FROM rental_items"
+    ids = []
+    rows = _db.execute(text(_query))
+    for row in rows:
+        ids.append(row[0])
+    return ids
+
+
 def insert_features():
     with get_db() as _db:
 
@@ -55,3 +65,61 @@ def insert_items():
 
         # Commitoidaan
         _db.commit()
+
+
+# Tämä on apufunktio, jolla saadaan featureiden id:t, jotta voidaan yhdistää featuret ja rental_itemit
+# Tämä on sama mitä itemeillä
+# Featureita oli color, material, price & size
+def _get_features(_db):
+    _query = "SELECT id, feature FROM features"
+    rows = _db.execute(text(_query))
+    _features = []
+    for row in rows:
+        _features.append({'id': row[0], 'feature': row[1]})
+    return _features
+
+
+# Tehdään seruaavaksi funktio, jossa yhdistellään randomisti rental_itemeitä ja featureita ASETETAANKO VALUET MYÖS??
+
+def mix_features_and_items():
+    with get_db() as _db:
+        # Käytetään fakeria hinnan arpomiseen
+        fake = Faker()
+        fake.add_provider(faker_commerce.Provider)
+
+        # Lista värivaihtoehdoista, jotka asetetaan randomisti jos feature on color
+        colors = ['black', 'cyan', 'yeallow', 'white', 'red', 'pink']
+
+        # Lista kokovaihtoehdoista, jotka asetetaan rondomisti jos feature on size
+        sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL']
+
+        items = _get_items(_db) # Eli _get_items funktiolla haetaan kaikki rental_temien id:t
+        features = _get_features(_db) # Eli haetaan feature ja sen id
+        _query = "INSERT INTO rental_items_has_features(rental_items_id, features_id, value) VALUES(:item_id, :feature_id, :value)"
+        # Tehdään yhdistämisiä 100 kertaa loopissa
+        for i in range(100):
+            # Lisätään try catch, jotta voidaan hylätä duplicaatit
+            try:
+                item_id = choice(items) # Valitaan joku rental_item tuote randomilla
+                # Käydään kaikki featuret läpi ja asetetaan oikeanlaiset valuet jokaiselle featurelle
+                for f in features:
+                    # Jos f:n feature (ei id) on color niin asetetaan colors listalta joku väri valueksi
+                    if f['feature'] == 'color':
+                        value = choice(colors)
+                    # Jos taas feature on price niin arvotaan valueksi joku hinta fakerinn avulla
+                    elif f['feature'] == 'price':
+                        value = fake.ecommerce_price(False)
+                    # Jos featuer on size niin otetaan randomisti sizes listasta joku koko
+                    elif f['feature'] == 'size':
+                        value = choice(sizes)
+                    elif f['features'] == 'material':
+                        value = choice(faker_commerce.PRODUCT_DATA['material'])
+                    # Executetaan query ja asetetaan aervot kyselyn muuttujiin
+                    _db.execute(text(_query), {'item_id': item_id, 'feature_id': f['id'], 'value': value})
+                    # Commitetaan aina
+                    _db.commit()
+            except Exception as e:
+                print(e)
+                _db.rollback
+
+
