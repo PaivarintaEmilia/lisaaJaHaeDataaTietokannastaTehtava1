@@ -1,4 +1,6 @@
 # Tähän luodaan ikilooppi datan lisäämistä varten
+import fetching_data
+
 import categories
 import rental_items
 import users
@@ -12,6 +14,7 @@ while True:
                     "5=lisää tuotteet\n" 
                     "6=lisää ominaisuuksia tuotteisiin\n" 
                     "7=lisää tavaraa transactioihin \n" 
+                    "8=testi datan haku \n" 
                     "q= lopeta): ")
     if _choice == 'q':
         break
@@ -36,3 +39,8 @@ while True:
         rental_items.mix_features_and_items()
     elif _choice == '7':
         rental_items.rent_items_transactions()
+    elif _choice == '8':
+        # Voit kutsua tätä funktiota ja tulostaa sen tulokset:
+        all_users = fetching_data.get_all_users()
+        for user in all_users:
+            print(user)
