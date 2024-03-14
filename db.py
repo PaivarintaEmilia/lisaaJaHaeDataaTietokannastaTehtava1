@@ -18,6 +18,7 @@ def get_db():
     try:
         engine = create_engine('mysql+mysqlconnector://root:@localhost/laplanduas_rental')
         db_session = sessionmaker(bind=engine)
+        _db = db_session()
         # Yeld on sama mitä return mutta se ei sulje toimintaa vaan palaa tänne takaisin ja sulkee yhteyden automaattisesti.
         yield _db
     finally:

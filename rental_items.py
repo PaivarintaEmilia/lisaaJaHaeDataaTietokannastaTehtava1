@@ -47,7 +47,7 @@ def insert_items():
         # Haetaan categoriat categories.py tiedoston funktion avulla
         categories = get_categories(_db)
 
-        _query = "INSERT INTO rental_items(name, description, created_at, serial_number, cateogries_id) VALUES"
+        _query = "INSERT INTO rental_items(name, description, created_at, serial_number, categories_id) VALUES"
 
         variables = {} # Tyhjä dictionary, jotta sinne voidaa lisätä tavaraa
 
@@ -89,7 +89,7 @@ def mix_features_and_items():
         fake.add_provider(faker_commerce.Provider)
 
         # Lista värivaihtoehdoista, jotka asetetaan randomisti jos feature on color
-        colors = ['black', 'cyan', 'yeallow', 'white', 'red', 'pink']
+        colors = ['black', 'cyan', 'yellow', 'white', 'red', 'pink']
 
         # Lista kokovaihtoehdoista, jotka asetetaan rondomisti jos feature on size
         sizes = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL']
@@ -113,7 +113,7 @@ def mix_features_and_items():
                     # Jos featuer on size niin otetaan randomisti sizes listasta joku koko
                     elif f['feature'] == 'size':
                         value = choice(sizes)
-                    elif f['features'] == 'material':
+                    elif f['feature'] == 'material':
                         value = choice(faker_commerce.PRODUCT_DATA['material'])
                     # Executetaan query ja asetetaan aervot kyselyn muuttujiin
                     _db.execute(text(_query), {'item_id': item_id, 'feature_id': f['id'], 'value': value})
@@ -141,7 +141,7 @@ def rent_items_transactions():
         variables = {}
 
         for i in range(100):
-            _query += f':created_at{i}, :due_date{i}, :auth_users_id{i}, :rental_items_id{i},'
+            _query += f'(:created_at{i}, :due_date{i}, :auth_users_id{i}, :rental_items_id{i}),'
             variables[f'created_at{i}'] = fake.date()
             variables[f'due_date{i}'] = fake.date()
             variables[f'auth_users_id{i}'] = choice(users)

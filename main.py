@@ -26,11 +26,11 @@ while True:
         else:
             num_of_rows = int(num_of_rows)
         users.insert_users(num_of_rows)
-    elif _choice == 3:
+    elif _choice == '3':
         categories.insert_categories()
-    elif _choice == 4:
+    elif _choice == '4':
         rental_items.insert_features()
-    elif _choice == 5:
+    elif _choice == '5':
         rental_items.insert_items()
     elif _choice == '6':
         rental_items.mix_features_and_items()

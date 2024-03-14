@@ -50,7 +50,7 @@ def _get_roles(_db):
         role_ids.append(row[0]) # Row 0 sisältää id:n. Mutta mihin?
 
     # TUlostaa roolien primary key arvot
-    print(role_ids)
+    #print(role_ids)
     return role_ids
 
 

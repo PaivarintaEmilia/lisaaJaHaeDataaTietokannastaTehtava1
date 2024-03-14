@@ -1,7 +1,7 @@
 # Lisätään kategorioiden lisäämisen toiminnallisuus tänne
 import faker_commerce
 from sqlalchemy import text
-
+from faker import Faker # Ei käytetä?
 from db import get_db
 
 
@@ -10,7 +10,7 @@ from db import get_db
 def get_categories(_db):
     _query = "SELECT id FROM categories"
     rows = _db.execute(text(_query))
-    ids = [] # Tyhjä dictionary
+    ids = [] # Tyhjä lista
     for row in rows:
         ids.append(row[0])
     return ids
