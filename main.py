@@ -41,6 +41,11 @@ while True:
         rental_items.rent_items_transactions()
     elif _choice == '8':
         # Voit kutsua tätä funktiota ja tulostaa sen tulokset:
-        all_users = fetching_data.get_all_users()
-        for user in all_users:
+        print_answers = fetching_data.get_all_users()
+        for user in print_answers:
             print(user)
+    elif _choice == '9':
+        # Voit kutsua tätä funktiota ja tulostaa sen tulokset:
+        print_answers = fetching_data.rental_data_month_week()
+        for answers in print_answers:
+            print(answers)
