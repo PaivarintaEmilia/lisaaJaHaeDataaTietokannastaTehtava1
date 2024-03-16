@@ -15,6 +15,12 @@ while True:
                     "6=lisää ominaisuuksia tuotteisiin\n" 
                     "7=lisää tavaraa transactioihin \n" 
                     "8=testi datan haku \n" 
+                    "9=Ensimmäinen kysely \n" 
+                    "10=Toinen kysely \n" 
+                    "11=Kolmas kysely \n" 
+                    "12=Neljäs kysely \n" 
+                    "13=Viides kysely \n" 
+                    "14=Kuuses kysely \n" 
                     "q= lopeta): ")
     if _choice == 'q':
         break
@@ -45,7 +51,26 @@ while True:
         for user in print_answers:
             print(user)
     elif _choice == '9':
-        # Voit kutsua tätä funktiota ja tulostaa sen tulokset:
         print_answers = fetching_data.rental_data_month_week()
+        for answers in print_answers:
+            print(answers)
+    elif _choice == '10':
+        print_answers = fetching_data.rental_data_month_daily()
+        for answers in print_answers:
+            print(answers)
+    elif _choice == '11':
+        print_answers = fetching_data.rental_data_year_monthly()
+        for answers in print_answers:
+            print(answers)
+    elif _choice == '12':
+        print_answers = fetching_data.top_10_most_rented_items()
+        for answers in print_answers:
+            print(answers)
+    elif _choice == '13':
+        print_answers = fetching_data.top_10_most_rented_items_by_chosen_month()
+        for answers in print_answers:
+            print(answers)
+    elif _choice == '14':
+        print_answers = fetching_data.which_month_has_most_rented_items()
         for answers in print_answers:
             print(answers)
