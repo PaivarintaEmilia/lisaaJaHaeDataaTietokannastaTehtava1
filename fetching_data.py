@@ -3,15 +3,8 @@ import mysql.connector
 from sqlalchemy import text
 from db import get_db
 
-# Tänne lisätään toiminnallisuudet data hakemiseta
 
-# Tehdään testi haku. Haetaan kaikki tiedot auth_usereista
-
-# QUERY: SELECT * FROM `auth_users`
-
-## lUODAAN FUNKTIO
-
-# Funktio, joka hakee kaikki käyttäjätiedot auth_users taulusta
+# Funktio, joka hakee kaikki käyttäjätiedot auth_users taulusta --> TÄMÄ ON TESTI
 def get_all_users():
     with get_db() as _db:
         # Määritellään SQL-kysely
@@ -28,7 +21,7 @@ def get_all_users():
 
 
 
-# 1. Funktio, jolla haetaan lainauksien määrä valitulla kuukaudelta viikoittain
+# 1. KYSELY
 
 def rental_data_month_week():
     with get_db() as _db:
@@ -60,8 +53,6 @@ def rental_data_month_week():
 
 
 
-
-
         try:
             # results = _db.execute(_query)
             results = _db.execute(_query, {'year': _year, 'month': _month})
@@ -83,8 +74,6 @@ def rental_data_month_week():
 
 # 2. KYSELY
 
-# 1. Funktio, jolla haetaan lainauksien määrä valitulla kuukaudelta viikoittain
-
 def rental_data_month_daily():
     with get_db() as _db:
 
@@ -96,7 +85,6 @@ def rental_data_month_daily():
             else:
                 print("Syötä vuosi neljänä numerona.")
 
-        # Miten pakotetaan neljä numeroinen syöte??
         _month = input("Kerro haluttu kuukausi:\n")
 
         _query = text("SELECT YEAR(created_at) as y, MONTH(created_at) as m, DAY(created_at) as d, COUNT(*) as renteditems "
@@ -106,13 +94,10 @@ def rental_data_month_daily():
 
 
         try:
-            # results = _db.execute(_query)
             results = _db.execute(_query, {'year': _year, 'month': _month})
 
-            # Kerätään kaikki rivit listaksi sanakirjoja
             answer = [row._asdict() for row in results]
 
-            # Palautetaan kaikki käyttäjät
             return answer
 
         except mysql.connector.Error as err:
@@ -126,8 +111,6 @@ def rental_data_month_daily():
 
 
 # 3. KYSELY
-
-# 1. Funktio, jolla haetaan lainauksien määrä valitulla kuukaudelta viikoittain
 
 def rental_data_year_monthly():
     with get_db() as _db:
@@ -148,26 +131,11 @@ def rental_data_year_monthly():
                       "GROUP BY MONTH(created_at);")
 
 
-
-        # Toinen tapa suorittaa kysely, jos tarvetta
-
-        # _query = text("SELECT YEAR(created_at) as y, MONTH(created_at) as m, COUNT(*) as renteditems "
-                     # "FROM rental_transactions "
-                     # "WHERE YEAR(created_at) = '%s' AND MONTH(created_at) = '%s' "
-                     # "GROUP BY WEEK(created_at);" % (_year, _month))
-
-
-
-
-
         try:
-            # results = _db.execute(_query)
             results = _db.execute(_query, {'year': _year})
 
-            # Kerätään kaikki rivit listaksi sanakirjoja
             answer = [row._asdict() for row in results]
 
-            # Palautetaan kaikki käyttäjät
             return answer
 
         except mysql.connector.Error as err:
@@ -181,8 +149,6 @@ def rental_data_year_monthly():
 
 
 # 4. KYSELY
-
-# 1. Funktio, jolla haetaan lainauksien määrä valitulla kuukaudelta viikoittain
 
 def top_10_most_rented_items():
     with get_db() as _db:
@@ -198,10 +164,8 @@ def top_10_most_rented_items():
 
 
         try:
-            # results = _db.execute(_query)
             results = _db.execute(_query)
 
-            # Kerätään kaikki rivit listaksi sanakirjoja
             answer = [row._asdict() for row in results]
 
             #
@@ -241,13 +205,10 @@ def top_10_most_rented_items_by_chosen_month():
 
 
         try:
-            # results = _db.execute(_query)
             results = _db.execute(_query, {'year': _year})
 
-            # Kerätään kaikki rivit listaksi sanakirjoja
             answer = [row._asdict() for row in results]
 
-            #
             return answer
 
         except mysql.connector.Error as err:
@@ -281,10 +242,8 @@ def which_month_has_most_rented_items():
 
 
         try:
-            # results = _db.execute(_query)
             results = _db.execute(_query, {'year': _year})
 
-            # Kerätään kaikki rivit listaksi sanakirjoja
             answer = [row._asdict() for row in results]
 
             #

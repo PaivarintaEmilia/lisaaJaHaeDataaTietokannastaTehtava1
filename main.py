@@ -46,7 +46,6 @@ while True:
     elif _choice == '7':
         rental_items.rent_items_transactions()
     elif _choice == '8':
-        # Voit kutsua tätä funktiota ja tulostaa sen tulokset:
         print_answers = fetching_data.get_all_users()
         for user in print_answers:
             print(user)
