@@ -4,7 +4,7 @@ import contextlib
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Tämä jätetään vertailuksi, koska tällä tavalla pitää aina muistaa sulkea yhteys databaseen
+# Tämä jätetään vertailuksi, koska tällä tavalla pitää aina muistaa sulkea yhteys databaseen, joten ei tätä
 def get_db1():
     engine = create_engine('mysql+mysqlconnector://root:@localhost/laplanduas_rental')
     db_session = sessionmaker(bind=engine)
